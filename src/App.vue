@@ -11,6 +11,15 @@
                 <br><br>
                 <button class="btn btn-primary" @click="show = !show">Show Alert</button>
                 <br><br>
+                <!-- out-in means let the old element animate out first, then let the new one animate in. in-out does vice versa. -->
+                <transition :name="alertAnimation" appear mode="out-in">
+                  <div class="alert alert-info" v-if="show" key="info">
+                    This is some info
+                  </div>
+                  <div class="alert alert-warning" v-else key="warning">
+                    This is a warning
+                  </div>
+                </transition>
                 <transition :name="alertAnimation" appear>
                   <div class="alert alert-info" v-if="show">
                     This is some info
@@ -29,6 +38,7 @@
                     This is some info
                   </div>
                 </transition>
+
 
             </div>
         </div>
