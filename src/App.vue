@@ -67,11 +67,16 @@
                 <button class="btn btn-primary" @click="addItem">Add Item</button>
                 <br><br>
                 <ul class="list-group">
-                  <li class="list-group-item"
-                      v-for="(number, index) in numbers"
-                      @click="removeItem(index)"
-                      style="cursor: pointer">
-                      {{number}}</li>
+                  <transition-group name="slide">
+                    <!-- for this animation to work, each element in the group needs a unique id -->
+                    <li class="list-group-item"
+                        v-for="(number, index) in numbers"
+                        @click="removeItem(index)"
+                        style="cursor: pointer"
+                        :key="number">
+                        {{number}}
+                    </li>
+                  </transition-group>
                 </ul>
 
             </div>
@@ -102,7 +107,7 @@
             const pos = Math.floor(Math.random() * this.numbers.length);
             // the 0 determines how many element are going to be removed at index pos
             //the third argument adds an element
-            this.numbers.splice(pos, 0, this.numbers.length + 1)
+            this.numbers.splice(pos, 0, this.numbers.length + 2)
           },
           removeItem(index){
             this.numbers.splice(index, 1);
@@ -193,6 +198,12 @@
     animation: slide-out 1s ease-out forwards;
     transition: opacity 1s;
     opacity: 0;
+    /*this makes sure that other elements may move above this element while this element is still being animated*/
+    position: absolute;
+  }
+
+  .slide-move {
+    transition: transform 1s;
   }
 
   @keyframes slide-in {
